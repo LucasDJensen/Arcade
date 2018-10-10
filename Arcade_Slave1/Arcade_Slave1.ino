@@ -16,7 +16,7 @@
 
 void setup() {
   Wire.begin(1);
-//  Serial.begin(19200);
+//  Serial.begin(9600);
   pinMode(trigPin1, OUTPUT);
   pinMode(echoPin1, INPUT);
   pinMode(trigPin2, OUTPUT);
@@ -33,56 +33,69 @@ void setup() {
 
 void loop() {
   long duration, distance;
+  long percent = 0;
+  int counter = 0;
 
   duration = getDuration(trigPin1, echoPin1);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 1");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 195;
+      counter++;
     }
   }
 
   duration = getDuration(trigPin2, echoPin2);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 2");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 225;
+      counter++;
     }
   }
 
   duration = getDuration(trigPin3, echoPin3);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 3");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 255;
+      counter++;
     }
   }
 
   duration = getDuration(trigPin4, echoPin4);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 4");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 285;
+      counter++;
     }
   }
 
   duration = getDuration(trigPin5, echoPin5);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 5");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 315;
+      counter++;
     }
   }
 
   duration = getDuration(trigPin6, echoPin6);
   if (validateForTransmit(duration)) {
-    distance = (duration/2) / 29.1;
-    if(distance != 0) {
-      transmit(String(distance) + " cm 6");
+    // distance = (duration / 2) / 29.1;
+    if (duration != 0) {
+      percent += 345;
+      counter++;
     }
   }
-
-  delay(35);
+  if (percent != 0) {
+    percent = percent / counter;
+    String str = String(percent) + " 1";
+//    Serial.println(str);
+    transmit(str);
+  }
+  delay(20);
 
 }
 
@@ -90,14 +103,14 @@ boolean validateForTransmit(long duration) {
   boolean isOk = false;
 
   if (duration < 4000) {
-      isOk = true;
+    isOk = true;
   }
   return isOk;
 }
 
 long getDuration(uint8_t triggerPin, uint8_t echoPin) {
   long duration;
-  digitalWrite(triggerPin, LOW ); 
+  digitalWrite(triggerPin, LOW );
   delayMicroseconds(2); // Added this line
   digitalWrite(triggerPin, HIGH);
   delayMicroseconds(10); // Added this line
