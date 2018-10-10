@@ -18,11 +18,14 @@ public class runatstart : MonoBehaviour {
 	}
 
 	float GetPercent() {
+		float fl = 0;
 		try {	
-			return serialPort.ReadLine();
+			fl = serialPort.ReadLine();
 		} catch(System.Exception) {
 				
 		}
+
+		return fl;
 	}
 	
 }
